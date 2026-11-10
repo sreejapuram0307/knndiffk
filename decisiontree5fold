@@ -1,0 +1,21 @@
+
+import numpy as np
+from sklearn.datasets import load_wine
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import cross_val_score, KFold
+
+data = load_wine()
+X = data.data
+y = data.target
+
+model = DecisionTreeClassifier(random_state=0)
+
+cv = KFold(n_splits=5, shuffle=True, random_state=0)
+
+scores = cross_val_score(model, X, y, cv=cv, scoring="accuracy")
+
+for i, score in enumerate(scores, start=1):
+    print("Fold", i, "Accuracy:", score)
+
+print("Mean Accuracy:", np.mean(scores))
+print("Standard Deviation:", np.std(scores))
